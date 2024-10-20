@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册聊天室</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #00796b;
+        }
+
+        input {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>注册聊天室</h2>
+    <input type="text" id="nickname" placeholder="昵称" autocomplete="off">
+    <input type="email" id="email" placeholder="邮箱" autocomplete="off">
+    <input type="password" id="password" placeholder="密码" autocomplete="off">
+    <input type="password" id="confirm-password" placeholder="确认密码" autocomplete="off">
+    <button id="register-button">注册</button>
+</div>
+
+<script>
+const registerButton = document.getElementById('register-button');
+
+registerButton.addEventListener('click', function() {
+    const nickname = document.getElementById('nickname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const confirmPassword = document.getElementById('confirm-password').value.trim();
+
+    if (nickname && email && password && (password === confirmPassword)) {
+        fetch('register.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ nickname, email, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("注册成功，请登录！");
+                window.location.href = 'index.php'; // 注册成功后跳转到登录界面
+            } else {
+                alert(data.message);
+            }
+        });
+    } else {
+        alert("请填写所有字段，并确保密码匹配。");
+    }
+});
+</script>
+
+</body>
+</html>
