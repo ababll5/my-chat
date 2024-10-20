@@ -145,7 +145,7 @@ let socket;
 
 // 初始化 WebSocket 连接
 function initWebSocket() {
-    socket = new WebSocket('wss://admin-im.ababll5.cn/wss');
+    socket = new WebSocket('');  //写你自己的
 
     socket.onopen = function() {
         console.log('WebSocket 连接已打开');
